@@ -11,10 +11,22 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     auth.onAuthStateChanged(user => setCurrentUser(user));
     createUserProfileDocument(currentUser);
+
+    // Filtering essential user informations
+    if (currentUser) {
+      const { uid, displayName, email, photoURL } = currentUser
+      setUserData({
+        uid,
+        displayName,
+        email,
+        photoURL
+      })
+    }
 
     return () => {
       unsubscribeFromAuth()
