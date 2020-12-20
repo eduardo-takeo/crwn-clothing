@@ -33,18 +33,34 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     const userRef = await firestore.doc(`users/${userAuth.uid}`).get()
     if (!userRef.exists) {
-        const { displayName, email, photoURL } = userAuth
-        const createdAt = new Date().toLocaleString()
+        try {
+            const { displayName, email, photoURL } = userAuth
+            const createdAt = new Date().toLocaleString()
 
-        const data = {
-            displayName,
-            email,
-            photoURL,
-            createdAt,
-            ...additionalData
+            const data = {
+                displayName,
+                email,
+                photoURL,
+                createdAt,
+                ...additionalData
+            }
+
+            await firestore.collection('users').doc(userAuth.uid).set(data)
+        } catch (error) {
+            console.error(error)
         }
+    }
+}
 
-        await firestore.collection('users').doc(userAuth.uid).set(data)
+export const getDocumentData = async (collection, doc) => {
+    if (collection && doc) {
+        try {
+            let response = await firestore.collection(collection).doc(doc).get()
+            response = response.data()
+            return response
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 
