@@ -15,7 +15,6 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged(user => setCurrentUser(user));
-    createUserProfileDocument(currentUser);
 
     // Filtering essential user informations
     if (currentUser) {

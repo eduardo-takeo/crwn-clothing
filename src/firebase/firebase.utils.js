@@ -25,10 +25,20 @@ const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
+const signIn = async (email, password) => {
+    if (!email || !password) return;
+
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 //Firestore
 export const firestore = firebase.firestore();
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
 
     const userRef = await firestore.doc(`users/${userAuth.uid}`).get()
@@ -52,7 +62,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     }
 }
 
-export const getDocumentData = async (collection, doc) => {
+const getDocumentData = async (collection, doc) => {
     if (collection && doc) {
         try {
             let response = await firestore.collection(collection).doc(doc).get()
@@ -64,4 +74,9 @@ export const getDocumentData = async (collection, doc) => {
     }
 }
 
+export {
+    createUserProfileDocument,
+    signIn,
+    getDocumentData
+}
 export default firebase;
