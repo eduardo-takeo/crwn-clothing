@@ -1,11 +1,17 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 
 import userReducer from './ducks/user';
 
+const middlewares = [logger];
+
 const rootReducer = combineReducers({
-    userReducer
+    user: userReducer
 })
 
-const store = createStore(rootReducer);
+const store = createStore(
+    rootReducer,
+    applyMiddleware(...middlewares)
+);
 
 export default store;
