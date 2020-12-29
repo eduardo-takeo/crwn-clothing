@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import './collection-item.styles.scss';
 import CustomButton from 'components/custom-button/custom-button.component';
+import { addItem } from 'redux/ducks/cart';
 
-const CollectionItem = ({ id, name, price, imageUrl }) => {
-  const [showAddToCart, setShowAddToCart] = useState(false);
+const CollectionItem = ({ item }) => {
+  const { id, name, price, imageUrl } = item;
+  const dispatch = useDispatch();
+
+  function addToCart(item) {
+    dispatch(addItem(item));
+  }
 
   return (
     <div className='collection-item'>
@@ -13,17 +20,18 @@ const CollectionItem = ({ id, name, price, imageUrl }) => {
         style={{
           backgroundImage: `url(${imageUrl})`
         }}
-        onMouseEnter={() => setShowAddToCart(true)}
-        onMouseLeave={() => setShowAddToCart(false)}
-      >
-        {showAddToCart &&
-          <CustomButton inverted className='custom-button'> ADD TO CART</CustomButton>
-        }
-      </div>
+      />
       <div className='collection-footer'>
         <span className='name'>{name}</span>
         <span className='price'>{price}</span>
       </div>
+      <CustomButton
+        inverted
+        className='custom-button'
+        onClick={() => addToCart(item)}
+      >
+        ADD TO CART
+      </CustomButton>
     </div>
   )
 }
