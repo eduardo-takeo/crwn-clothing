@@ -1,15 +1,22 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 
-import './cart-dropdown.styles.scss';
-import CustomButton from 'components/custom-button/custom-button.component.jsx';
+import "./cart-dropdown.styles.scss";
+import CartItem from "components/cart-item/cart-item.component.jsx";
+import CustomButton from "components/custom-button/custom-button.component.jsx";
 
 function CartDropdown() {
-    return (
-        <div className='cart-dropdown'>
-            <div className="cart-items" />
-            <CustomButton>GO TO CHECKOUT</CustomButton>
-        </div>
-    )
+  const { items } = useSelector((state) => state.cart);
+  return (
+    <div className="cart-dropdown">
+      <div className="cart-items">
+        {items.map((item) => (
+          <CartItem key={item.id} item={item} />
+        ))}
+      </div>
+      <CustomButton>GO TO CHECKOUT</CustomButton>
+    </div>
+  );
 }
 
-export default CartDropdown
+export default CartDropdown;
