@@ -10,9 +10,11 @@ function CartDropdown() {
   return (
     <div className="cart-dropdown">
       <div className="cart-items">
-        {items.map((item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
+        {items.length ? (
+          items.map((item) => <CartItem key={item.id} item={item} />)
+        ) : (
+          <span className="empty-message">Your cart is empty</span>
+        )}
       </div>
       <CustomButton>GO TO CHECKOUT</CustomButton>
     </div>
