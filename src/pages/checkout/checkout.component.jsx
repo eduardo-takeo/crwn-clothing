@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import "./checkout.styles.scss";
+import { FormatCurrency } from "../../utils/Format";
 
 function CheckoutPage() {
   const { totalPrice } = useSelector((state) => state.cart);
@@ -26,7 +27,7 @@ function CheckoutPage() {
         </div>
       </div>
       <div className="total">
-        <span>Total: ${totalPrice}</span>
+        <span>Total: {FormatCurrency(totalPrice)}</span>
       </div>
     </div>
   );
