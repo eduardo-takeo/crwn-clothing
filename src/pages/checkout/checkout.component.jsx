@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import "./checkout.styles.scss";
 import { FormatCurrency } from "../../utils/Format";
 
+import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+
 function CheckoutPage() {
-  const { totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector((state) => state.cart);
 
   return (
     <div className="checkout-page">
@@ -26,6 +28,9 @@ function CheckoutPage() {
           <span>Remove</span>
         </div>
       </div>
+      {items.map((item) => (
+        <CheckoutItem key={item.id} item={item} />
+      ))}
       <div className="total">
         <span>Total: {FormatCurrency(totalPrice)}</span>
       </div>
