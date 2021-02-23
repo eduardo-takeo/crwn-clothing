@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import "./checkout.styles.scss";
 
 function CheckoutPage() {
-  const { items } = useSelector((state) => state.cart);
-  console.log("items", items);
+  const { totalPrice } = useSelector((state) => state.cart);
 
   return (
     <div className="checkout-page">
@@ -27,7 +26,7 @@ function CheckoutPage() {
         </div>
       </div>
       <div className="total">
-        <span>Total: </span>
+        <span>Total: ${totalPrice}</span>
       </div>
     </div>
   );
