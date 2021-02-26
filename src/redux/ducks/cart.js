@@ -1,6 +1,7 @@
 // CONSTANTS
 const TOGGLE_MODAL = "TOGGLE_MODAL";
 const ADD_ITEM = "ADD_ITEM";
+const DELETE_ITEM = "DELETE_ITEM";
 const CALCULATE_TOTAL = "CALCULATE_TOTAL";
 
 // ACTIONS
@@ -11,6 +12,11 @@ export const toggleModal = (status) => ({
 
 export const addItem = (item) => ({
   type: ADD_ITEM,
+  item,
+});
+
+export const deleteItem = (item) => ({
+  type: DELETE_ITEM,
   item,
 });
 
@@ -38,6 +44,11 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         items: checkForExistingItem(action.item, state.items),
       };
+    case DELETE_ITEM:
+      return {
+        ...state,
+        items: removeItem(action.item, state.items),
+      };
     case CALCULATE_TOTAL:
       return {
         ...state,
@@ -64,8 +75,12 @@ const checkForExistingItem = (itemToAdd, cartItems) => {
   return [...cartItems, { ...itemToAdd, quantity: 1 }];
 };
 
+const removeItem = (itemToRemove, cartItems) => {
+  return cartItems.filter((item) => item.id !== itemToRemove.id);
+};
+
 const calculateTotalPrice = (cartItems) => {
-  if (cartItems.length < 1) return;
+  if (cartItems.length < 1) return 0;
 
   const values = cartItems.map((item) =>
     item.quantity > 1 ? item.price * item.quantity : item.price

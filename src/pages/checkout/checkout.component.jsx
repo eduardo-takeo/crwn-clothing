@@ -1,13 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import "./checkout.styles.scss";
+import { calculateTotal } from "redux/ducks/cart";
 import { FormatCurrency } from "../../utils/Format";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 function CheckoutPage() {
   const { items, totalPrice } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(calculateTotal(items));
+  }, [items, dispatch]);
 
   return (
     <div className="checkout-page">

@@ -1,15 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import "./checkout-item.styles.scss";
+import { deleteItem } from "redux/ducks/cart";
 
 import DeleteIcon from "../checkout-delete-icon/checkout-delete-icon.component";
 
 export default function CheckoutItem({
+  item,
   item: { imageUrl, name, price, quantity },
 }) {
-  function deleteItem() {
-    // TODO: Implement delete action on cart redux
-    return;
+  const dispatch = useDispatch();
+
+  function removeItem() {
+    dispatch(deleteItem(item));
   }
 
   return (
@@ -21,7 +25,7 @@ export default function CheckoutItem({
       <span className="quantity">{quantity}</span>
       <span className="price">{price}</span>
       <span className="remove-button">
-        <DeleteIcon onClick={deleteItem} />
+        <DeleteIcon onClick={removeItem} />
       </span>
     </div>
   );
