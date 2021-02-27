@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import "./checkout-item.styles.scss";
-import { deleteItem } from "redux/ducks/cart";
+import { addItem, removeItem, clearItemFromCart } from "redux/ducks/cart";
 
 import PlusIcon from "components/plus-icon/plus-icon.component";
 import DeleteIcon from "components/checkout-delete-icon/checkout-delete-icon.component";
@@ -14,8 +14,16 @@ export default function CheckoutItem({
 }) {
   const dispatch = useDispatch();
 
-  function removeItem() {
-    dispatch(deleteItem(item));
+  function decreaseQuantity() {
+    dispatch(removeItem(item));
+  }
+
+  function increaseQuantity() {
+    dispatch(addItem(item));
+  }
+
+  function clearItem() {
+    dispatch(clearItemFromCart(item));
   }
 
   return (
@@ -26,14 +34,14 @@ export default function CheckoutItem({
       <span className="name">{name}</span>
       <span className="quantity">
         <div className="quantity-container">
-          <MinusIcon />
+          <MinusIcon onClick={decreaseQuantity} />
           {quantity}
-          <PlusIcon />
+          <PlusIcon onClick={increaseQuantity} />
         </div>
       </span>
       <span className="price">{price}</span>
       <span className="remove-button">
-        <DeleteIcon onClick={removeItem} />
+        <DeleteIcon onClick={clearItem} />
       </span>
     </div>
   );

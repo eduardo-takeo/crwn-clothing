@@ -1,7 +1,8 @@
 // CONSTANTS
 const TOGGLE_MODAL = "TOGGLE_MODAL";
 const ADD_ITEM = "ADD_ITEM";
-const DELETE_ITEM = "DELETE_ITEM";
+const REMOVE_ITEM = "REMOVE_ITEM";
+const CLEAR_ITEM_FROM_CART = "CLEAR_ITEM_FROM_CART";
 const CALCULATE_TOTAL = "CALCULATE_TOTAL";
 
 // ACTIONS
@@ -15,8 +16,13 @@ export const addItem = (item) => ({
   item,
 });
 
-export const deleteItem = (item) => ({
-  type: DELETE_ITEM,
+export const removeItem = (item) => ({
+  type: REMOVE_ITEM,
+  item,
+});
+
+export const clearItemFromCart = (item) => ({
+  type: CLEAR_ITEM_FROM_CART,
   item,
 });
 
@@ -42,12 +48,17 @@ export default function cartReducer(state = initialState, action) {
     case ADD_ITEM:
       return {
         ...state,
-        items: checkForExistingItem(action.item, state.items),
+        items: addItemToCart(action.item, state.items),
       };
-    case DELETE_ITEM:
+    case REMOVE_ITEM:
       return {
         ...state,
-        items: removeItem(action.item, state.items),
+        items: decreaseQuantity(action.item, state.items),
+      };
+    case CLEAR_ITEM_FROM_CART:
+      return {
+        ...state,
+        items: clearItem(action.item, state.items),
       };
     case CALCULATE_TOTAL:
       return {
@@ -61,7 +72,7 @@ export default function cartReducer(state = initialState, action) {
 }
 
 // UTILS
-const checkForExistingItem = (itemToAdd, cartItems) => {
+const addItemToCart = (itemToAdd, cartItems) => {
   const existingItem = cartItems.find((item) => itemToAdd.id === item.id);
 
   if (existingItem) {
@@ -75,7 +86,21 @@ const checkForExistingItem = (itemToAdd, cartItems) => {
   return [...cartItems, { ...itemToAdd, quantity: 1 }];
 };
 
-const removeItem = (itemToRemove, cartItems) => {
+const decreaseQuantity = (itemToRemove, cartItems) => {
+  const existingItem = cartItems.find((item) => itemToRemove.id === item.id);
+
+  if (existingItem && existingItem.quantity > 1) {
+    return cartItems.map((cartItem) =>
+      cartItem.id === itemToRemove.id
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem
+    );
+  }
+
+  return cartItems;
+};
+
+const clearItem = (itemToRemove, cartItems) => {
   return cartItems.filter((item) => item.id !== itemToRemove.id);
 };
 
