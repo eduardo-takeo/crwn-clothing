@@ -4,7 +4,9 @@ import { useDispatch } from "react-redux";
 import "./checkout-item.styles.scss";
 import { deleteItem } from "redux/ducks/cart";
 
-import DeleteIcon from "../checkout-delete-icon/checkout-delete-icon.component";
+import PlusIcon from "components/plus-icon/plus-icon.component";
+import DeleteIcon from "components/checkout-delete-icon/checkout-delete-icon.component";
+import MinusIcon from "components/minus-icon/minus-icon.component";
 
 export default function CheckoutItem({
   item,
@@ -22,7 +24,13 @@ export default function CheckoutItem({
         <img src={imageUrl} alt="item" />
       </div>
       <span className="name">{name}</span>
-      <span className="quantity">{quantity}</span>
+      <span className="quantity">
+        <div className="quantity-container">
+          <MinusIcon />
+          {quantity}
+          <PlusIcon />
+        </div>
+      </span>
       <span className="price">{price}</span>
       <span className="remove-button">
         <DeleteIcon onClick={removeItem} />

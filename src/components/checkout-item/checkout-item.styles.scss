@@ -22,8 +22,10 @@
     width: 23%;
   }
 
-  .quantity {
-    padding-left: 20px;
+  .quantity-container {
+    display: flex;
+    width: 65px;
+    justify-content: space-between;
   }
 
   .remove-button {
