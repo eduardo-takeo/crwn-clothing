@@ -6,6 +6,7 @@ import logger from "redux-logger";
 import userReducer from "./ducks/user";
 import cartReducer from "./ducks/cart";
 import directoryReducer from "./ducks/directory";
+import shopReducer from "./ducks/shop";
 
 const middlewares = [logger];
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
   directory: directoryReducer,
+  shop: shopReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
