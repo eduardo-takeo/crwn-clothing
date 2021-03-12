@@ -1,25 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import CollectionPage from "pages/collection/collection.component";
+import ShopCollection from "pages/shop-collection/shop-collection.component";
+import React from "react";
+import { Route, Switch } from "react-router";
 
-import CollectionPreview from "../../components/collection-preview/collection-preview";
-import { calculateTotal } from "redux/ducks/cart.js";
-
-function ShopPage() {
-  const { items } = useSelector((state) => state.cart);
-  const { collection } = useSelector((state) => state.shop);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(calculateTotal(items));
-  }, [items, dispatch]);
-
+export default function ShopPage({ match }) {
   return (
-    <div className="shop-page">
-      {collection.map(({ id, ...otherCollectionProps }) => (
-        <CollectionPreview key={id} {...otherCollectionProps} />
-      ))}
+    <div>
+      <Switch>
+        <Route exact path={`${match.path}`} component={ShopCollection} />
+        <Route
+          path={`${match.path}/:collectionId`}
+          component={CollectionPage}
+        />
+      </Switch>
     </div>
   );
 }
-
-export default ShopPage;
