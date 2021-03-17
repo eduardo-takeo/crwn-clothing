@@ -7,6 +7,7 @@ import { FormatCurrency } from "../../utils/Format";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import EmptyPrompt from "components/empty-prompt/empty-prompt.component";
+import StripeCheckoutButton from "components/stripe-checkout-button/stripe-checkout-button.component";
 
 function CheckoutPage() {
   const { items, totalPrice } = useSelector((state) => state.cart);
@@ -46,6 +47,7 @@ function CheckoutPage() {
       <div className="total">
         <span>Total: {FormatCurrency(totalPrice)}</span>
       </div>
+      <StripeCheckoutButton price={totalPrice} />
     </div>
   );
 }
