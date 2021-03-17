@@ -2,7 +2,7 @@ import CollectionItem from "components/collection-item/collection-item.component
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { currentCollectionSelector } from "../../redux/ducks/shop";
+import { currentCollectionSelector } from "redux/ducks/shop";
 import "./collection.styles.scss";
 
 export default function CollectionPage() {

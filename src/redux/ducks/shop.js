@@ -25,3 +25,9 @@ export const currentCollectionSelector = (collectionName) =>
     [collectionSelector],
     (collection) => collection[collectionName]
   );
+
+export const previewCollectionSelector = createSelector(
+  // Transform SHOP_DATA object into an array
+  [collectionSelector],
+  (collection) => Object.keys(collection).map((item) => collection[item])
+);

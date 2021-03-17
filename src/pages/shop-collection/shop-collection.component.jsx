@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import CollectionPreview from "../../components/collection-preview/collection-preview";
+import CollectionPreview from "components/collection-preview/collection-preview";
 import { calculateTotal } from "redux/ducks/cart.js";
+import { previewCollectionSelector } from "redux/ducks/shop";
 
 function ShopCollection() {
   const { items } = useSelector((state) => state.cart);
-  const { collection } = useSelector((state) => state.shop);
+  const collection = useSelector(previewCollectionSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
