@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { currentCollectionSelector } from "../../redux/ducks/shop";
 
 export default function CollectionPage() {
-  const { collectionId } = useParams();
-  // TODO: Build component based on collection items
+  const { collectionName } = useParams();
+  const collection = useSelector(currentCollectionSelector(collectionName));
+
+  // TODO: Build component based on collection
 
   return (
     <div>

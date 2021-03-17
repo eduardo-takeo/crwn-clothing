@@ -9,7 +9,7 @@ export default function ShopPage({ match }) {
       <Switch>
         <Route exact path={`${match.path}`} component={ShopCollection} />
         <Route
-          path={`${match.path}/:collectionId`}
+          path={`${match.path}/:collectionName`}
           component={CollectionPage}
         />
       </Switch>
