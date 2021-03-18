@@ -8,7 +8,9 @@ import cartReducer from "./ducks/cart";
 import directoryReducer from "./ducks/directory";
 import shopReducer from "./ducks/shop";
 
-const middlewares = [logger];
+const middlewares = [];
+
+if (process.env.NODE_ENV === "development") middlewares.push(logger);
 
 const persistConfig = {
   key: "root",
